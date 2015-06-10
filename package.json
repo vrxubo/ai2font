@@ -1,6 +1,6 @@
 {
-  "name": "ai2font",
-  "version": "0.1.3",
+  "name": "fsk-font",
+  "version": "0.1.0",
   "description": "将AI导出的svg转换为字体的svg",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -16,7 +16,7 @@
   },
   "main": "./lib/index.js",
   "bin": {
-    "ai2font": "./bin/execute.js"
+    "fsk-font": "./bin/execute.js"
   },
   "author": "xubo <xb451@163.com>",
   "bugs": {

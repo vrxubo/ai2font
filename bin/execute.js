@@ -1,15 +1,36 @@
 #!/usr/bin/env node
-var ai2font = require('../');
-var args = process.argv;
 var fs = require('fs');
-var deep = !!args[3];
-if (args[2]) {
-  fs.stat(args[2], function(err, stat) {
+var ArgumentParser = require('argparse').ArgumentParser;
+var ai2font = require('../');
+var argsParser = new ArgumentParser({
+  version: require('../package.json').version,
+  addHelp: true,
+  description: 'SVG to font converter'
+});
+argsParser.addArgument(['-d', '--dir'], {
+  help: 'svg文件所在目录'
+});
+argsParser.addArgument(['-t', '--target'], {
+  help: '字体文件存放目录;最好不要和svg文件是同一个目录,或者是svg文件所在目录的子目录.'
+});
+argsParser.addArgument(['-D', '--deep'], {
+  help: '是否扫描-d指定目录的子目录,默认不扫描',
+  action: 'storeTrue'
+});
+argsParser.addArgument(['-f', '--font'], {
+  help: '指定字体名称'
+});
+argsParser.addArgument(['-s', '--separate'], {
+  help: '指定svg文件名的分隔符,默认为~, 暂不支持此参数'
+});
+var args = argsParser.parseArgs();
+if (args.dir) {
+  fs.stat(args.dir, function(err, stat) {
     if (err) {
       console.dir(err);
     } else {
       if (stat.isDirectory()) {
-        ai2font(args[2], deep);
+        ai2font(args);
       } else {
         console.log('参数1不是一个有效的目录');
       }
